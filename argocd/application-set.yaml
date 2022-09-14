@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx
+  namespace: argo
+spec:
+  generators:
+  - git:
+      repoURL: https://github.km.spaceforce.mil/frank-tyler-ctr/argo-application-sets.git
+      revision: HEAD
+      directories:
+      - path: overlays/cluster1/*
+  template:
+    metadata:
+      name: '{{path[0]}}'
+    spec:
+      project: "nginx-project"
+      source:
+        repoURL: https://github.km.spaceforce.mil/frank-tyler-ctr/argo-application-sets.git
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
