@@ -2,11 +2,11 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: nginx
-  namespace: argo
+  namespace: argocd
 spec:
   generators:
   - git:
-      repoURL: https://github.km.spaceforce.mil/frank-tyler-ctr/argo-application-sets.git
+      repoURL: https://github.com/franktylerva/argocd-application-sets.git
       revision: HEAD
       directories:
       - path: overlays/cluster1/*
@@ -14,9 +14,9 @@ spec:
     metadata:
       name: '{{path[0]}}'
     spec:
-      project: "nginx-project"
+      project: "default"
       source:
-        repoURL: https://github.km.spaceforce.mil/frank-tyler-ctr/argo-application-sets.git
+        repoURL: https://github.com/franktylerva/argocd-application-sets.git
         targetRevision: HEAD
         path: '{{path}}'
       destination:
