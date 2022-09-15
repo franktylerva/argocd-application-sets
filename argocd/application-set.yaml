@@ -14,11 +14,15 @@ spec:
     metadata:
       name: '{{path[2]}}'
     spec:
+      syncPolicy:
+        syncOptions:
+        - ApplyOutOfSyncOnly=true
+        - CreateNamespace=true
       project: "default"
       source:
         repoURL: https://github.com/franktylerva/argocd-application-sets.git
         targetRevision: HEAD
         path: '{{path}}'
       destination:
-        server: https://kubernetes.default.svc
-        namespace: default
+        name: in-cluster
+        namespace: '{{path.basename}}'
